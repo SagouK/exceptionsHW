@@ -1,12 +1,32 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductDataBase {
     
-    public static Product getProduct(int productId) {
-        // Подразумевается обращение к базе данных или хранилищу товаров
-        // и получение информации о товаре по его ID
-        // В данном примере мы используем заглушку
-        if (productId == 1) {
-            return new Product("Product 1", 10, 5.99);
-        }
-        return null;
+    private final List<Product> listOfProducts = new ArrayList<>();
+    
+    
+    public List<Product> getListOfProducts() {
+        return listOfProducts;
     }
+
+    public ProductDataBase(){
+        this.listOfProducts.add(new Product("Product 1", 10, 7.99));
+        this.listOfProducts.add(new Product("Product 2", 20, 4.99));
+        this.listOfProducts.add(new Product("Product 3", 5, 70.99));
+        this.listOfProducts.add(new Product("Product 4", 30, 2.99));
+        this.listOfProducts.add(new Product("Product 5", 2, 30.99));
+    }
+
+    public Product getProduct(int productId) throws ProductDataBaseException {
+        if ((productId > 0) && (productId <= listOfProducts.size())){
+            return listOfProducts.get(productId - 1);
+        }
+        throw new ProductDataBaseException("Product not found.");
+    }
+
+    public void reduceProductQuantity(Product product, int quantity) {
+        product.setAvailableQuantity(product.getAvailableQuantity() - quantity);
+    }
+    
 }
